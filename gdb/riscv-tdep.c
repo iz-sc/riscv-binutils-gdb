@@ -225,6 +225,13 @@ riscv_register_name (struct gdbarch *gdbarch,
   return register_name(gdbarch, regnum, 0);
 }
 
+static const char *
+riscv_pseudo_register_name (struct gdbarch *gdbarch,
+                     int             regnum)
+{
+  return register_name(gdbarch, regnum, 1);
+}
+
 static void
 riscv_extract_return_value (struct type *type,
 			    struct regcache *regs,
@@ -1154,7 +1161,9 @@ riscv_gdbarch_init (struct gdbarch_info  info,
 
   /* Functions to supply register information.  */
   set_gdbarch_register_name (gdbarch, riscv_register_name);
+  set_tdesc_pseudo_register_name (gdbarch, riscv_pseudo_register_name);
   set_gdbarch_register_type (gdbarch, riscv_register_type);
+  set_tdesc_pseudo_register_type (gdbarch, riscv_register_type);
   set_gdbarch_print_registers_info (gdbarch, riscv_print_registers_info);
   set_gdbarch_register_reggroup_p (gdbarch, riscv_register_reggroup_p);
 
