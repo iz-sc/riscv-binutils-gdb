@@ -190,14 +190,14 @@ value_of_riscv_user_reg (struct frame_info *frame, const void *baton)
 static const char *
 register_name (struct gdbarch *gdbarch,
 	       int             regnum,
-               int             prefer_alias)
+	       int             prefer_alias)
 {
   int i;
   static char buf[20];
 
   if (tdesc_has_registers (gdbarch_target_desc (gdbarch)))
     return tdesc_register_name (gdbarch, regnum);
-
+  /* Prefer to use the alias. */
   if (prefer_alias &&
       regnum >= RISCV_ZERO_REGNUM && regnum <= RISCV_LAST_REGNUM)
     {
@@ -228,7 +228,7 @@ riscv_register_name (struct gdbarch *gdbarch,
 #if 0
 static const char *
 riscv_pseudo_register_name (struct gdbarch *gdbarch,
-                     int             regnum)
+			    int             regnum)
 {
   return register_name(gdbarch, regnum, 1);
 }
