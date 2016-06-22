@@ -225,12 +225,14 @@ riscv_register_name (struct gdbarch *gdbarch,
   return register_name(gdbarch, regnum, 0);
 }
 
+#if 0
 static const char *
 riscv_pseudo_register_name (struct gdbarch *gdbarch,
                      int             regnum)
 {
   return register_name(gdbarch, regnum, 1);
 }
+#endif
 
 static void
 riscv_extract_return_value (struct type *type,
@@ -358,6 +360,7 @@ riscv_return_value (struct gdbarch  *gdbarch,
   return RETURN_VALUE_REGISTER_CONVENTION;
 }
 
+#if 0
 static enum register_status
 riscv_pseudo_register_read (struct gdbarch  *gdbarch,
 			    struct regcache *regcache,
@@ -375,6 +378,7 @@ riscv_pseudo_register_write (struct gdbarch  *gdbarch,
 {
   regcache_raw_write (regcache, cookednum, buf);
 }
+#endif
 
 static struct type *
 riscv_register_type (struct gdbarch  *gdbarch,
@@ -1150,10 +1154,12 @@ riscv_gdbarch_init (struct gdbarch_info  info,
   set_gdbarch_print_insn (gdbarch, print_insn_riscv);
 
   /* Register architecture.  */
+#if 0
   set_gdbarch_pseudo_register_read (gdbarch, riscv_pseudo_register_read);
   set_gdbarch_pseudo_register_write (gdbarch, riscv_pseudo_register_write);
-  set_gdbarch_num_regs (gdbarch, RISCV_NUM_REGS);
   set_gdbarch_num_pseudo_regs (gdbarch, RISCV_NUM_REGS);
+#endif
+  set_gdbarch_num_regs (gdbarch, RISCV_NUM_REGS);
   set_gdbarch_sp_regnum (gdbarch, RISCV_SP_REGNUM);
   set_gdbarch_pc_regnum (gdbarch, RISCV_PC_REGNUM);
   set_gdbarch_ps_regnum (gdbarch, RISCV_FP_REGNUM);
@@ -1161,9 +1167,11 @@ riscv_gdbarch_init (struct gdbarch_info  info,
 
   /* Functions to supply register information.  */
   set_gdbarch_register_name (gdbarch, riscv_register_name);
-  set_tdesc_pseudo_register_name (gdbarch, riscv_pseudo_register_name);
   set_gdbarch_register_type (gdbarch, riscv_register_type);
+#if 0
+  set_tdesc_pseudo_register_name (gdbarch, riscv_pseudo_register_name);
   set_tdesc_pseudo_register_type (gdbarch, riscv_register_type);
+#endif
   set_gdbarch_print_registers_info (gdbarch, riscv_print_registers_info);
   set_gdbarch_register_reggroup_p (gdbarch, riscv_register_reggroup_p);
 
