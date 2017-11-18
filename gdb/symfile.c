@@ -3293,6 +3293,7 @@ find_pc_overlay (CORE_ADDR pc)
   struct obj_section *osect, *best_match = NULL;
 
   if (overlay_debugging)
+   {
     ALL_OBJSECTIONS (objfile, osect)
       if (section_is_overlay (osect))
       {
@@ -3306,6 +3307,7 @@ find_pc_overlay (CORE_ADDR pc)
 	else if (pc_in_unmapped_range (pc, osect))
 	  best_match = osect;
       }
+   }
   return best_match;
 }
 
@@ -3320,10 +3322,11 @@ find_pc_mapped_section (CORE_ADDR pc)
   struct obj_section *osect;
 
   if (overlay_debugging)
+   {
     ALL_OBJSECTIONS (objfile, osect)
       if (pc_in_mapped_range (pc, osect) && section_is_mapped (osect))
 	return osect;
-
+   }
   return NULL;
 }
 
@@ -3338,6 +3341,7 @@ list_overlays_command (char *args, int from_tty)
   struct obj_section *osect;
 
   if (overlay_debugging)
+   {
     ALL_OBJSECTIONS (objfile, osect)
       if (section_is_mapped (osect))
       {
@@ -3363,6 +3367,7 @@ list_overlays_command (char *args, int from_tty)
 
 	nmapped++;
       }
+    }
   if (nmapped == 0)
     printf_filtered (_("No sections are mapped.\n"));
 }

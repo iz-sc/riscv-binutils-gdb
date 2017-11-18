@@ -91,10 +91,10 @@ fetch_csr (SIM_CPU *cpu, const char *name, int csr, unsigned_word *reg)
     case CSR_TIMEH:
     case CSR_TIMEHW:
       RISCV_ASSERT_RV32 (cpu, "CSR: %s", name);
+#if 0
     case CSR_TIME:
       {
 	struct timespec ts;
-
 	if (clock_gettime (CLOCK_BOOTTIME, &ts) == 0)
 	  {
 	    uint64_t time = (uint64_t)ts.tv_sec * 1000 * 1000 + ts.tv_nsec;
@@ -107,6 +107,7 @@ fetch_csr (SIM_CPU *cpu, const char *name, int csr, unsigned_word *reg)
 	  }
       }
       break;
+#endif
     }
 
   return *reg;
